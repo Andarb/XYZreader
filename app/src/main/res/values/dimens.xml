@@ -10,5 +10,7 @@
 
     <!-- main -->
     <dimen name="appbar_height">112dp</dimen>
+    <dimen name="list_item_height">200dp</dimen>
+    <dimen name="image_scrim_height">100dp</dimen>
 
 </resources>

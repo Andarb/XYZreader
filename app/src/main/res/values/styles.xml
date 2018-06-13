@@ -18,6 +18,9 @@
 <resources>
 
     <style name="Theme.Bacon" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#455A64</item>
+        <item name="colorPrimaryDark">#263238</item>
+
         <item name="android:fitsSystemWindows">true</item>
     </style>
 </resources>
