@@ -30,23 +30,16 @@
 
         <TextView
             android:id="@+id/article_title"
-            style="@style/TextAppearance.AppCompat.Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/article_title"
             android:layout_above="@id/article_subtitle"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/article_subtitle"
             app:layout_constraintStart_toStartOf="@+id/article_subtitle" />
 
         <TextView
             android:id="@+id/article_subtitle"
-            style="@style/TextAppearance.AppCompat.Body1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/article_subtitle"
             android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
-            android:textColor="#E0E0E0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
