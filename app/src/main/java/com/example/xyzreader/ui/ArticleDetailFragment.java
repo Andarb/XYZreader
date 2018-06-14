@@ -7,6 +7,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.ShareCompat;
 import android.text.Html;
 import android.text.format.DateUtils;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 
@@ -42,7 +44,7 @@ public class ArticleDetailFragment extends Fragment implements
     private long mItemId;
     private View mRootView;
 
-    private ImageView mPhotoView;
+    private AppBarLayout mAppBar;
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
     // Use default locale format
@@ -96,14 +98,14 @@ public class ArticleDetailFragment extends Fragment implements
                              Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
 
-        mPhotoView = mRootView.findViewById(R.id.photo);
+        mAppBar = mRootView.findViewById(R.id.appbar_detail);
 
-        mRootView.findViewById(R.id.share_fab).setOnClickListener(new View.OnClickListener() {
+        mRootView.findViewById(R.id.share_icon).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
                         .setType("text/plain")
-                        .setText("Some sample text")
+                        .setText("Take a look at this story: ")
                         .getIntent(), getString(R.string.action_share)));
             }
         });
@@ -151,31 +153,23 @@ public class ArticleDetailFragment extends Fragment implements
             Date publishedDate = parsePublishedDate();
             if (!publishedDate.before(START_OF_EPOCH.getTime())) {
                 bylineView.setText(Html.fromHtml(
-                        DateUtils.getRelativeTimeSpanString(
-                                publishedDate.getTime(),
-                                System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
-                                DateUtils.FORMAT_ABBREV_ALL).toString()
-                                + " by <font color='#ffffff'>"
-                                + mCursor.getString(ArticleLoader.Query.AUTHOR)
-                                + "</font>"));
-
+                        "by " + mCursor.getString(ArticleLoader.Query.AUTHOR) + " (" +
+                                DateUtils.getRelativeTimeSpanString(
+                                        publishedDate.getTime(),
+                                        System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
+                                        DateUtils.FORMAT_ABBREV_ALL).toString() + ")"));
             } else {
                 // If date is before 1902, just show the string
-                bylineView.setText(Html.fromHtml(
-                        outputFormat.format(publishedDate) + " by <font color='#ffffff'>"
-                                + mCursor.getString(ArticleLoader.Query.AUTHOR)
-                                + "</font>"));
-
+                bylineView.setText(Html.fromHtml("by " +
+                        mCursor.getString(ArticleLoader.Query.AUTHOR)) +
+                        " (" + outputFormat.format(publishedDate) + ")");
             }
             bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)
                     .replaceAll("(\r\n|\n)", "<br />")));
+
             Glide.with(this).load(mCursor.getString(ArticleLoader.Query.PHOTO_URL))
-                    .into(mPhotoView);
-        } else {
-            mRootView.setVisibility(View.GONE);
-            titleView.setText("N/A");
-            bylineView.setText("N/A");
-            bodyView.setText("N/A");
+                    .apply(RequestOptions.centerCropTransform())
+                    .into((ImageView) mRootView.findViewById(R.id.appbar_background));
         }
     }
 
