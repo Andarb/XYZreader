@@ -11,7 +11,6 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.ShareCompat;
 import android.text.Html;
 import android.text.format.DateUtils;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +42,7 @@ public class ArticleDetailFragment extends Fragment implements
     private Cursor mCursor;
     private long mItemId;
     private View mRootView;
+    private String mCurrentAuthor;
 
     private AppBarLayout mAppBar;
 
@@ -105,7 +105,7 @@ public class ArticleDetailFragment extends Fragment implements
             public void onClick(View view) {
                 startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
                         .setType("text/plain")
-                        .setText("Take a look at this story: ")
+                        .setText("Check out this author: " + mCurrentAuthor)
                         .getIntent(), getString(R.string.action_share)));
             }
         });
@@ -139,11 +139,10 @@ public class ArticleDetailFragment extends Fragment implements
 
         TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
         TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
-        bylineView.setMovementMethod(new LinkMovementMethod());
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
 
 
-        bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
+        bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Merriweather-Light.ttf"));
 
         if (mCursor != null) {
             mRootView.setAlpha(0);
@@ -151,9 +150,10 @@ public class ArticleDetailFragment extends Fragment implements
             mRootView.animate().alpha(1);
             titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
             Date publishedDate = parsePublishedDate();
+            mCurrentAuthor = mCursor.getString(ArticleLoader.Query.AUTHOR);
             if (!publishedDate.before(START_OF_EPOCH.getTime())) {
                 bylineView.setText(Html.fromHtml(
-                        "by " + mCursor.getString(ArticleLoader.Query.AUTHOR) + " (" +
+                        "by " + mCurrentAuthor + " (" +
                                 DateUtils.getRelativeTimeSpanString(
                                         publishedDate.getTime(),
                                         System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
@@ -161,8 +161,8 @@ public class ArticleDetailFragment extends Fragment implements
             } else {
                 // If date is before 1902, just show the string
                 bylineView.setText(Html.fromHtml("by " +
-                        mCursor.getString(ArticleLoader.Query.AUTHOR)) +
-                        " (" + outputFormat.format(publishedDate) + ")");
+                        mCurrentAuthor +
+                        " (" + outputFormat.format(publishedDate) + ")"));
             }
             bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)
                     .replaceAll("(\r\n|\n)", "<br />")));
