@@ -100,7 +100,7 @@ public class ArticleDetailFragment extends Fragment implements
 
         mAppBar = mRootView.findViewById(R.id.appbar_detail);
 
-        mRootView.findViewById(R.id.share_icon).setOnClickListener(new View.OnClickListener() {
+        mRootView.findViewById(R.id.share_fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
