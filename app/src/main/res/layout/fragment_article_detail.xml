@@ -16,54 +16,33 @@
             <ImageView
                 android:id="@+id/appbar_background"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/image_scrim_height"
-                android:src="@drawable/scrim"
-                android:layout_gravity="bottom" />
+                android:layout_height="match_parent"
+                android:tint="#6F000000" />
 
             <android.support.v7.widget.Toolbar
+                style="@style/toolbar_sans_margins"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
-                android:layout_gravity="bottom"
-                android:layout_marginLeft="@dimen/list_toolbar_side_margin"
-                android:layout_marginRight="@dimen/list_toolbar_side_margin"
+                android:layout_gravity="center"
                 app:layout_collapseMode="pin">
 
-                <android.support.constraint.ConstraintLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/share_icon"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginTop="8dp"
-                        android:src="@drawable/ic_share"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/article_title"
                         style="@style/article_title"
-                        android:layout_marginEnd="16dp"
-                        app:layout_constraintBottom_toTopOf="@+id/article_byline"
-                        app:layout_constraintEnd_toStartOf="@+id/share_icon"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:layout_gravity="center"
+                        android:textSize="@dimen/detail_title_text_size" />
 
                     <TextView
                         android:id="@+id/article_byline"
                         style="@style/article_subtitle"
-                        android:layout_marginEnd="16dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/share_icon"
-                        app:layout_constraintTop_toBottomOf="@+id/article_title" />
-                </android.support.constraint.ConstraintLayout>
+                        android:layout_gravity="center" />
+                </LinearLayout>
 
 
             </android.support.v7.widget.Toolbar>
@@ -75,35 +54,29 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v7.widget.CardView
-            android:layout_margin="8dp"
+        <TextView
+            android:id="@+id/article_body"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.5"
+            android:maxLines="50"
+            android:padding="16dp"
+            android:textColor="#666666"
+            android:textColorLink="@color/link_color"
+            android:textSize="@dimen/detail_body_text_size" />
 
-            <TextView
-                android:id="@+id/article_body"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:textColor="#666666"
-                android:maxLines="50"
-                android:ellipsize="end"
-                android:lineSpacingMultiplier="1.5"
-                android:textColorLink="@color/link_color"
-                android:textSize="@dimen/detail_body_text_size" />
-
-        </android.support.v7.widget.CardView>
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/share_fab"
-        app:fabSize="mini"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_share"
         android:layout_gravity="bottom|end"
-        android:contentDescription="@string/action_share"
         android:layout_marginBottom="@dimen/fab_margin"
-        android:layout_marginEnd="@dimen/fab_margin" />
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:contentDescription="@string/action_share"
+        android:src="@drawable/ic_share"
+        app:fabSize="mini" />
 
 </android.support.design.widget.CoordinatorLayout>
