@@ -20,22 +20,28 @@
     <style name="Theme.Bacon" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#455A64</item>
         <item name="colorPrimaryDark">#263238</item>
+        <item name="colorAccent">#263238</item>
         <item name="android:fitsSystemWindows">true</item>
         <item name="colorControlNormal">#FFFFFF</item>
         <item name="contentInsetStartWithNavigation">0dp</item>
     </style>
 
     <style name="article_title" parent="@style/TextAppearance.AppCompat.Title">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="article_subtitle" parent="@style/TextAppearance.AppCompat.Body1">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#E0E0E0</item>
+    </style>
+
+    <style name="article_body">
+        <item name="android:ellipsize">end</item>
+        <item name="android:lineSpacingMultiplier">1.5</item>
+        <item name="android:maxLines">@integer/detail_body_maxlines</item>
+        <item name="android:textColor">@color/body_text_colour</item>
+        <item name="android:textColorLink">?colorAccent</item>
+        <item name="android:textSize">@dimen/detail_body_text_size</item>
     </style>
 
     <style name="toolbar_sans_margins">
@@ -43,6 +49,11 @@
         <item name="contentInsetLeft">0dp</item>
         <item name="contentInsetRight">0dp</item>
         <item name="contentInsetStart">0dp</item>
+    </style>
+
+    <style name="icons">
+        <item name="android:tint">#FFFFFF</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
 </resources>

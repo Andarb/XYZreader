@@ -1,14 +1,22 @@
 <resources>
     <!-- detail -->
-    <dimen name="detail_title_text_size">24sp</dimen>
+    <dimen name="detail_title_text_size">22sp</dimen>
     <dimen name="detail_subtitle_text_size">20sp</dimen>
     <dimen name="detail_body_text_size">16sp</dimen>
-    <dimen name="appbar_detail_height">400dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="detail_body_padding">16dp</dimen>
+    <integer name="detail_body_maxlines">6</integer>
+    <dimen name="detail_appbar_height">400dp</dimen>
+    <dimen name="detail_fab_margin">16dp</dimen>
+    <dimen name="detail_cardview_margin">8dp</dimen>
 
     <!-- main -->
-    <dimen name="appbar_list_height">112dp</dimen>
-    <dimen name="list_item_height">200dp</dimen>
-    <dimen name="image_scrim_height">100dp</dimen>
+    <dimen name="list_appbar_height">112dp</dimen>
+    <dimen name="list_cardview_height">200dp</dimen>
+    <dimen name="list_cardview_margin">4dp</dimen>
+    <dimen name="list_scrim_height">100dp</dimen>
+
+    <!-- actionbar icons -->
+    <dimen name="icon_start_end_margin">8dp</dimen>
+    <dimen name="icon_top_margin">16dp</dimen>
 
 </resources>
