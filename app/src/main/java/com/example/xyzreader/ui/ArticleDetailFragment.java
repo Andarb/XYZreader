@@ -49,6 +49,7 @@ public class ArticleDetailFragment extends Fragment implements
     private String mCurrentAuthor;
     private TextView mBodyTextView;
     private NestedScrollView mScrollView;
+    private FloatingActionButton mFabMoreOrLess;
 
     private AppBarLayout mAppBar;
 
@@ -118,8 +119,8 @@ public class ArticleDetailFragment extends Fragment implements
             }
         });
 
-        FloatingActionButton fabMoreOrLess = mRootView.findViewById(R.id.more_less_fab);
-        fabMoreOrLess.setOnClickListener(new View.OnClickListener() {
+        mFabMoreOrLess = mRootView.findViewById(R.id.more_less_fab);
+        mFabMoreOrLess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int maxLines = getResources().getInteger(R.integer.detail_body_maxlines);
@@ -131,12 +132,14 @@ public class ArticleDetailFragment extends Fragment implements
                     mScrollView.scrollTo(0, 0);
 
                     rotateIcon = AnimationUtils.loadAnimation(getActivity(), R.anim.rotation_clockwise);
+                    mFabMoreOrLess.setContentDescription(getString(R.string.less_fab));
                 } else {
                     mScrollView.scrollTo(0, 0);
                     mAppBar.setExpanded(true);
                     mBodyTextView.setMaxLines(maxLines);
 
                     rotateIcon = AnimationUtils.loadAnimation(getActivity(), R.anim.rotation_anticlockwise);
+                    mFabMoreOrLess.setContentDescription(getString(R.string.more_fab));
                 }
 
                 rotateIcon.setFillAfter(true);
