@@ -8,13 +8,17 @@ import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ShareCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,6 +47,8 @@ public class ArticleDetailFragment extends Fragment implements
     private long mItemId;
     private View mRootView;
     private String mCurrentAuthor;
+    private TextView mBodyTextView;
+    private NestedScrollView mScrollView;
 
     private AppBarLayout mAppBar;
 
@@ -99,14 +105,42 @@ public class ArticleDetailFragment extends Fragment implements
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
 
         mAppBar = mRootView.findViewById(R.id.appbar_detail);
+        mBodyTextView = mRootView.findViewById(R.id.article_body);
+        mScrollView = mRootView.findViewById(R.id.body_scroll_view);
 
-        mRootView.findViewById(R.id.share_fab).setOnClickListener(new View.OnClickListener() {
+        getActivity().findViewById(R.id.share_icon).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
                         .setType("text/plain")
-                        .setText("Check out this author: " + mCurrentAuthor)
+                        .setText("Check out this article: ")
                         .getIntent(), getString(R.string.action_share)));
+            }
+        });
+
+        FloatingActionButton fabMoreOrLess = mRootView.findViewById(R.id.more_less_fab);
+        fabMoreOrLess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int maxLines = getResources().getInteger(R.integer.detail_body_maxlines);
+                Animation rotateIcon;
+
+                if (mBodyTextView.getMaxLines() <= maxLines) {
+                    mBodyTextView.setMaxLines(Integer.MAX_VALUE);
+                    mAppBar.setExpanded(false);
+                    mScrollView.scrollTo(0, 0);
+
+                    rotateIcon = AnimationUtils.loadAnimation(getActivity(), R.anim.rotation_clockwise);
+                } else {
+                    mScrollView.scrollTo(0, 0);
+                    mAppBar.setExpanded(true);
+                    mBodyTextView.setMaxLines(maxLines);
+
+                    rotateIcon = AnimationUtils.loadAnimation(getActivity(), R.anim.rotation_anticlockwise);
+                }
+
+                rotateIcon.setFillAfter(true);
+                v.startAnimation(rotateIcon);
             }
         });
 
@@ -145,9 +179,6 @@ public class ArticleDetailFragment extends Fragment implements
         bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Merriweather-Light.ttf"));
 
         if (mCursor != null) {
-            mRootView.setAlpha(0);
-            mRootView.setVisibility(View.VISIBLE);
-            mRootView.animate().alpha(1);
             titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
             Date publishedDate = parsePublishedDate();
             mCurrentAuthor = mCursor.getString(ArticleLoader.Query.AUTHOR);

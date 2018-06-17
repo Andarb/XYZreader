@@ -68,7 +68,7 @@ public class ArticleListActivity extends AppCompatActivity implements
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int screenHeight = displayMetrics.heightPixels;
-        int appBarHeight = (int) getResources().getDimension(R.dimen.appbar_list_height);
+        int appBarHeight = (int) getResources().getDimension(R.dimen.list_appbar_height);
         int progressBarHeightOffset = screenHeight / 2 - appBarHeight;
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, progressBarHeightOffset);
 

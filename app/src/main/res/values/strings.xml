@@ -9,4 +9,7 @@
 
     <string name="up">Up</string>
 
+    <string name="more_fab">Show more</string>
+    <string name="less_fab">Show less</string>
+
 </resources>
