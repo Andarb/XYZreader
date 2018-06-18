@@ -15,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.example.xyzreader.R;
@@ -72,12 +74,22 @@ public class ArticleDetailActivity extends AppCompatActivity
 
         // Set up `UP` navigation
         ImageView upNavigationIcon = findViewById(R.id.up_icon);
+
         upNavigationIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavUtils.navigateUpFromSameTask(ArticleDetailActivity.this);
             }
         });
+
+        // Animate UP and Share icons to slide into view
+        ImageView shareIcon = findViewById(R.id.share_icon);
+        Animation upSlide = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.slide_up_icon);
+        Animation shareSlide = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.slide_share_icon);
+        upNavigationIcon.startAnimation(upSlide);
+        shareIcon.startAnimation(shareSlide);
     }
 
     @Override
