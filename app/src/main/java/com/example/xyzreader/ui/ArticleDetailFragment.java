@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ShareCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.text.Html;
 import android.text.format.DateUtils;
@@ -48,6 +49,7 @@ public class ArticleDetailFragment extends Fragment implements
     private View mRootView;
     private String mCurrentAuthor;
     private TextView mBodyTextView;
+    private TextView mBylineView;
     private NestedScrollView mScrollView;
     private FloatingActionButton mFabMoreOrLess;
 
@@ -108,6 +110,7 @@ public class ArticleDetailFragment extends Fragment implements
         mAppBar = mRootView.findViewById(R.id.appbar_detail);
         mBodyTextView = mRootView.findViewById(R.id.article_body);
         mScrollView = mRootView.findViewById(R.id.body_scroll_view);
+        mBylineView = mRootView.findViewById(R.id.article_byline);
 
         getActivity().findViewById(R.id.share_icon).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +122,7 @@ public class ArticleDetailFragment extends Fragment implements
             }
         });
 
+        // Setup logic for expanding and collapsing long body text via animated Fab button
         mFabMoreOrLess = mRootView.findViewById(R.id.more_less_fab);
         mFabMoreOrLess.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,6 +148,29 @@ public class ArticleDetailFragment extends Fragment implements
 
                 rotateIcon.setFillAfter(true);
                 v.startAnimation(rotateIcon);
+            }
+        });
+
+        // Set animation for subtitle text to fade into view
+        ViewPager viewPager = getActivity().findViewById(R.id.pager);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                mBylineView.setAlpha(0f);
+                mBylineView.setVisibility(View.VISIBLE);
+                mBylineView.animate()
+                        .alpha(1f)
+                        .setDuration(1500);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
 
@@ -175,7 +202,7 @@ public class ArticleDetailFragment extends Fragment implements
         }
 
         TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
-        TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
+
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
 
 
@@ -186,7 +213,7 @@ public class ArticleDetailFragment extends Fragment implements
             Date publishedDate = parsePublishedDate();
             mCurrentAuthor = mCursor.getString(ArticleLoader.Query.AUTHOR);
             if (!publishedDate.before(START_OF_EPOCH.getTime())) {
-                bylineView.setText(Html.fromHtml(
+                mBylineView.setText(Html.fromHtml(
                         "by " + mCurrentAuthor + " (" +
                                 DateUtils.getRelativeTimeSpanString(
                                         publishedDate.getTime(),
@@ -194,7 +221,7 @@ public class ArticleDetailFragment extends Fragment implements
                                         DateUtils.FORMAT_ABBREV_ALL).toString() + ")"));
             } else {
                 // If date is before 1902, just show the string
-                bylineView.setText(Html.fromHtml("by " +
+                mBylineView.setText(Html.fromHtml("by " +
                         mCurrentAuthor +
                         " (" + outputFormat.format(publishedDate) + ")"));
             }
@@ -205,6 +232,11 @@ public class ArticleDetailFragment extends Fragment implements
                     .apply(RequestOptions.centerCropTransform())
                     .into((ImageView) mRootView.findViewById(R.id.appbar_background));
         }
+        mBylineView.setAlpha(0f);
+        mBylineView.setVisibility(View.VISIBLE);
+        mBylineView.animate()
+                .alpha(1f)
+                .setDuration(1500);
     }
 
     @Override
