@@ -18,21 +18,20 @@
 <resources>
 
     <style name="Theme.Bacon" parent="@style/Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#455A64</item>
-        <item name="colorPrimaryDark">#263238</item>
-        <item name="colorAccent">#263238</item>
+        <item name="colorPrimary">@color/primary_colour</item>
+        <item name="colorPrimaryDark">@color/primary_dark_colour</item>
+        <item name="colorAccent">@color/accent_colour</item>
         <item name="android:fitsSystemWindows">true</item>
-        <item name="colorControlNormal">#FFFFFF</item>
         <item name="contentInsetStartWithNavigation">0dp</item>
     </style>
 
     <style name="article_title" parent="@style/TextAppearance.AppCompat.Title">
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/article_title_colour</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="article_subtitle" parent="@style/TextAppearance.AppCompat.Body1">
-        <item name="android:textColor">#E0E0E0</item>
+        <item name="android:textColor">@color/article_subtitle_colour</item>
     </style>
 
     <style name="article_body">
@@ -52,7 +51,7 @@
     </style>
 
     <style name="icons">
-        <item name="android:tint">#FFFFFF</item>
+        <item name="android:tint">@color/actionbar_icon_colour</item>
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 

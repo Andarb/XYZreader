@@ -160,7 +160,7 @@ public class ArticleDetailFragment extends Fragment implements
                 mBylineView.setVisibility(View.VISIBLE);
                 mBylineView.animate()
                         .alpha(1f)
-                        .setDuration(1500);
+                        .setDuration(700);
             }
 
             @Override
@@ -236,7 +236,7 @@ public class ArticleDetailFragment extends Fragment implements
         mBylineView.setVisibility(View.VISIBLE);
         mBylineView.animate()
                 .alpha(1f)
-                .setDuration(1500);
+                .setDuration(700);
     }
 
     @Override
