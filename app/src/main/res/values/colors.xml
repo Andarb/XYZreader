@@ -16,7 +16,15 @@
 -->
 
 <resources>
+    <color name="primary_colour">#455A64</color>
+    <color name="primary_dark_colour">#263238</color>
+    <color name="accent_colour">#ff6e40</color>
+    <color name="actionbar_icon_colour">@android:color/white</color>
+
     <color name="list_background">#EEEEEE</color>
-    <color name="body_text_colour">#666666</color>
     <color name="image_tint">#66000000</color>
+
+    <color name="article_title_colour">@android:color/white</color>
+    <color name="article_subtitle_colour">#E0E0E0</color>
+    <color name="body_text_colour">#666666</color>
 </resources>
